@@ -10,6 +10,16 @@ export default [
             route('login', 'routes/auth/loginPage.tsx'),
             route('register', 'routes/auth/registerPage.tsx'),
         ])
+    ]),
+
+
+    // Chat
+    ...prefix('/chat', [
+        layout('layouts/chatLayout.tsx', [
+            index('routes/chat/noChatSelectedPage.tsx'),
+            route(':idClient', 'routes/chat/clientChatPage.tsx'),
+        ])
     ])
+    
 
 ] satisfies RouteConfig;
