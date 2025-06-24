@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router";
 
-import { X } from "lucide-react";
+import { LogOut, X } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { ScrollArea } from "~/components/ui/scroll-area";
 
@@ -15,7 +15,7 @@ export default function Layout() {
                         <span className="font-semibold">NexTalk</span>
                     </div>
                 </div>
-                <ScrollArea className="h-[calc(100vh-64px)]">
+                <ScrollArea className="h-[calc(100vh-130px)]">
                     <div className="space-y-4 p-4">
                         <div className="space-y-1">
                             <h3 className="px-2 text-sm font-semibold">Contacts</h3>
@@ -81,6 +81,13 @@ export default function Layout() {
                         </div>
                     </div>
                 </ScrollArea>
+
+                <div className="p-4 border-t">
+                    <Button variant="destructive" className="w-full">
+                        <LogOut/>
+                        Logout
+                    </Button>
+                </div>
             </div>
 
             {/* Main Content */}
