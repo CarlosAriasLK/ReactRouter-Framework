@@ -1,5 +1,6 @@
-import { Copy, Download, ThumbsUp, ThumbsDown, Send } from "lucide-react";
 import { useState } from "react";
+
+import { Copy, Download, ThumbsUp, ThumbsDown, Send } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Textarea } from "~/components/ui/textarea";
