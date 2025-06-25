@@ -1,5 +1,22 @@
-import { Link, NavLink } from "react-router";
+import { Form, NavLink } from "react-router";
 import type { Route } from "./+types/testingPage";
+import { sleep } from "~/lib/sleep";
+
+export async function action( { request }: Route.ActionArgs ) {
+  await sleep(1000);
+  const data = await request.formData();
+  console.log('server side action')
+  console.log({ data });
+
+  return { ok: true, message: 'Todo bien' };
+}
+
+export async function clientAction({ serverAction }: Route.ClientActionArgs) {
+  await sleep(1000);
+  const data = await serverAction();
+  return { message: 'hola mundo desde clientAction', data: data };
+}
+
 
 
 export async function loader() {
@@ -8,12 +25,9 @@ export async function loader() {
 }
 
 export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
-  // call the server loader
   const serverData = await serverLoader();
-  // And/or fetch data on the client
-  // Return the data to expose through useLoaderData()
   console.log('Hola desde clientLoader - Client')
-  return { message: 'Hola desde clientLoader - Client', serverData: serverData};
+  return { message: 'Hola desde clientLoader - Client', serverData: serverData };
 }
 
 export default function testingPage({
@@ -37,6 +51,13 @@ export default function testingPage({
       >
         Testing Args
       </NavLink>
+
+
+      <Form action="" className="mt-2 flex gap-2" method="post">
+          <input type="text" className="border-2 border-black rounded-2xl"  name="name"/>
+          <input type="text" className="border-2 border-black rounded-2xl"  name="age"/>
+          <button type="submit" className=" p-2.5 rounded bg-blue-300">Submit</button>
+      </Form>
 
     </div>
   );
