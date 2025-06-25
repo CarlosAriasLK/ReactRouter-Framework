@@ -8,11 +8,11 @@ import { ContactInformationCard } from '../chat/components/contactInformationCar
 
 import { getClients } from "~/fake/fake-data";
 
+//? Este componente solo funciona en los route modules que estén definidos en mis rutas
 export async function loader() {
     const clients = await getClients();
     return { clients };
 }
-
 
 export default function Layout( { loaderData }: Route.ComponentProps ) {
 
