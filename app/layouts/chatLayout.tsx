@@ -1,12 +1,23 @@
 import { Outlet } from "react-router";
-
 import { LogOut, X } from "lucide-react";
+import type { Route } from "./+types/chatLayout";
+
 import { Button } from "~/components/ui/button";
 import { ContactList } from "~/chat/components/ContactList";
 import { ContactInformationCard } from '../chat/components/contactInformationCard/ContactInformationCard';
 
+import { getClients } from "~/fake/fake-data";
 
-export default function Layout() {
+export async function loader() {
+    const clients = await getClients();
+    return { clients };
+}
+
+
+export default function Layout( { loaderData }: Route.ComponentProps ) {
+
+    const { clients } = loaderData;
+
     return (
         <div className="flex h-screen bg-background">
 
@@ -19,7 +30,7 @@ export default function Layout() {
                     </div>
                 </div>
                 
-                <ContactList />
+                <ContactList clients={ clients }/>
 
                 <div className="p-4 border-t">
                     <Button variant="destructive" className="w-full">

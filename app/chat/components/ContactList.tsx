@@ -2,8 +2,16 @@ import { NavLink } from 'react-router';
 
 import { Button } from '~/components/ui/button';
 import { ScrollArea } from '~/components/ui/scroll-area';
+import type { Client } from '../interfaces/chat.interfaces';
 
-export const ContactList = () => {
+interface Props {
+    clients: Client[];
+}
+
+export const ContactList = ({ clients }: Props) => {
+
+
+
     return (
         <ScrollArea className="h-[calc(100vh-130px)]">
             <div className="space-y-4 p-4">
@@ -11,46 +19,25 @@ export const ContactList = () => {
                     <h3 className="px-2 text-sm font-semibold">Contacts</h3>
                     <div className="space-y-1">
 
-                        <NavLink to={'/chat'} className="flex w-full justify-start">
-                            <div className="h-6 w-6 rounded-full bg-blue-500 mr-2 flex-shrink-0 flex items-center justify-center text-white text-xs">
-                                G5
-                            </div>
-                            G5 Customer
-                        </NavLink>
-
-                        <NavLink
-                            to={'/chat/abc'}
-                            className={({ isActive }) =>
-                                `w-full flex items-center mt-3 transition-all duration-300 rounded-lg px-2 py-2 ${isActive
-                                    ? 'bg-primary/10 border-primary shadow-md'
-                                    : 'hover:bg-gray-100'
-                                }`
-                            }
-                        >
-                            <div className="h-6 w-6 rounded-full bg-green-500 mr-2 flex-shrink-0 flex items-center justify-center text-white text-xs">
-                                JD
-                            </div>
-                            John Doe
-                        </NavLink>
-
-                        <Button variant="ghost" className="w-full justify-start">
-                            <div className="h-6 w-6 rounded-full bg-purple-500 mr-2 flex-shrink-0 flex items-center justify-center text-white text-xs">
-                                AS
-                            </div>
-                            Alice Smith
-                        </Button>
-                        <Button variant="ghost" className="w-full justify-start">
-                            <div className="h-6 w-6 rounded-full bg-yellow-500 mr-2 flex-shrink-0 flex items-center justify-center text-white text-xs">
-                                RJ
-                            </div>
-                            Robert Johnson
-                        </Button>
-                        <Button variant="ghost" className="w-full justify-start">
-                            <div className="h-6 w-6 rounded-full bg-pink-500 mr-2 flex-shrink-0 flex items-center justify-center text-white text-xs">
-                                EW
-                            </div>
-                            Emma Wilson
-                        </Button>
+                        {
+                            clients.map(client => (
+                                <NavLink
+                                    key={client.id}
+                                    to={`/chat/client/${ client.id }`}
+                                    className={({ isActive }) =>
+                                        `w-full flex items-center mt-1 transition-all duration-300 rounded-lg px-2 py-2 ${isActive
+                                            ? 'bg-primary/10 border-primary shadow-md'
+                                            : 'hover:bg-gray-100'
+                                        }`
+                                    }
+                                >
+                                    <div className="h-6 w-6 rounded-full bg-blue-400 mr-2 flex-shrink-0 flex items-center justify-center text-white text-xs">
+                                        {client.name.charAt(0)}
+                                    </div>
+                                    {client.name}
+                                </NavLink>
+                            ))
+                        }
                     </div>
                 </div>
                 <div className="pt-4 border-t mt-4">
