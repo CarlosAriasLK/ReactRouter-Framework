@@ -1,8 +1,9 @@
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import type { Route } from "./+types/testingPage";
 
 
 export async function loader() {
+  console.log('Hola desde serverLoader - Server')
   return { message: 'Hola desde serverLoader - Server' }
 }
 
@@ -11,10 +12,8 @@ export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
   const serverData = await serverLoader();
   // And/or fetch data on the client
   // Return the data to expose through useLoaderData()
-  return {
-    message: 'Hola desde clientLoader - Client',
-    serverData
-  };
+  console.log('Hola desde clientLoader - Client')
+  return { message: 'Hola desde clientLoader - Client', serverData: serverData};
 }
 
 export default function testingPage({
@@ -32,9 +31,12 @@ export default function testingPage({
       <p>Matched Routes: {JSON.stringify(matches)}</p>
 
 
-      <Link to='/auth/testingargs' className="text-blue-400 underline text-2xl">
+      <NavLink
+        to='/auth/testingargs'
+        className={({ isPending }) => !isPending ? "text-blue-400 text-2xl underline" : "text-red-400 text-2xl underline"}
+      >
         Testing Args
-      </Link>
+      </NavLink>
 
     </div>
   );
