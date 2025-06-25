@@ -10,7 +10,7 @@ export default [
             route('login', 'routes/auth/loginPage.tsx'),
             route('register', 'routes/auth/registerPage.tsx'),
             route('testing', 'routes/auth/testingPage.tsx'),
-            route('testingargs', 'routes/auth/testingArgsPage.tsx'),
+            route('testingargs/:id/:name/:age', 'routes/auth/testingArgsPage.tsx'),
         ])
     ]),
 

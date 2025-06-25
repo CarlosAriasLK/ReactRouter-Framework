@@ -32,7 +32,7 @@ export default function testingPage({
 
 
       <NavLink
-        to='/auth/testingargs'
+        to='/auth/testingargs/ABC-123/juan/25'
         className={({ isPending }) => !isPending ? "text-blue-400 text-2xl underline" : "text-red-400 text-2xl underline"}
       >
         Testing Args

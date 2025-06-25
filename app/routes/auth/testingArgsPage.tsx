@@ -46,11 +46,19 @@ export function links() {
   ];
 }
 
-export async function clientLoader() {
+export async function loader({ params }: Route.LoaderArgs ) {
   await sleep(1500);
-  return { message: 'Hola mundo esperando' };
+  console.log({params})
+  return { message: 'Hola mundo' };
 }
 
+export async function clientLoader({ params }: Route.ClientLoaderArgs ) {
+  await sleep(1500);
+  console.log({params})
+  return { message: 'Hola mundo desde clientLader y fallBack' };
+}
+
+//? Mientras se carga la data me hace un loader o un fallback
 export function HydrateFallback() {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -59,12 +67,17 @@ export function HydrateFallback() {
   );
 }
 
+clientLoader.hydrate = true as const;
+
 export default function testingArgsPage({
   loaderData,
   actionData,
   params,
   matches,
 }: Route.ComponentProps) {
+
+  const { id, name, age } = params;
+
   return (
     <div>
 
