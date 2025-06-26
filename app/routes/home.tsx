@@ -1,5 +1,6 @@
+import { Navigate, redirect } from "react-router";
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -8,6 +9,11 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+//? Primero se carga en el lado del servidor, sino está autenticado, nisiquiera se muestra en el lado del cliente
+export async function Loader () {
+  return redirect('/chat');
+}
+
 export default function Home() {
-  return <Welcome />;
+  return <Navigate to='/chat' />;
 }
