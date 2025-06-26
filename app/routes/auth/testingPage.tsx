@@ -1,8 +1,9 @@
-import { Form, NavLink } from "react-router";
+import { Form, NavLink, useNavigation } from "react-router";
 import type { Route } from "./+types/testingPage";
 import { sleep } from "~/lib/sleep";
 
-export async function action( { request }: Route.ActionArgs ) {
+//* Actions y clientActions
+export async function action({ request }: Route.ActionArgs) {
   await sleep(1000);
   const data = await request.formData();
   console.log('server side action')
@@ -18,7 +19,7 @@ export async function clientAction({ serverAction }: Route.ClientActionArgs) {
 }
 
 
-
+//* loader y clientLoader
 export async function loader() {
   console.log('Hola desde serverLoader - Server')
   return { message: 'Hola desde serverLoader - Server' }
@@ -30,12 +31,18 @@ export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
   return { message: 'Hola desde clientLoader - Client', serverData: serverData };
 }
 
+
+
 export default function testingPage({
   loaderData,
   actionData,
   params,
   matches,
 }: Route.ComponentProps) {
+
+  const navigation = useNavigation();
+  const isPosting = navigation.state === 'submitting';
+
   return (
     <div>
       <h1 className="text-2xl font-bold text-blue-500 py-5">Testing page</h1>
@@ -54,9 +61,15 @@ export default function testingPage({
 
 
       <Form action="" className="mt-2 flex gap-2" method="post">
-          <input type="text" className="border-2 border-black rounded-2xl"  name="name"/>
-          <input type="text" className="border-2 border-black rounded-2xl"  name="age"/>
-          <button type="submit" className=" p-2.5 rounded bg-blue-300">Submit</button>
+        <input type="text" className="border-2 border-black rounded-2xl" name="name" />
+        <input type="text" className="border-2 border-black rounded-2xl" name="age" />
+        <button
+          type="submit"
+          disabled={isPosting}
+          className={`p-2.5 rounded bg-blue-400 ${isPosting ? "disabled:opacity-50" : ""}`}
+        >
+          {isPosting ? 'Submitting...' : 'Submit'}
+        </button>
       </Form>
 
     </div>

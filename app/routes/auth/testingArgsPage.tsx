@@ -46,6 +46,7 @@ export function links() {
   ];
 }
 
+//* Loader, clientLoader
 export async function loader({ params }: Route.LoaderArgs ) {
   await sleep(1500);
   console.log({params})
@@ -76,6 +77,7 @@ export default function testingArgsPage({
   matches,
 }: Route.ComponentProps) {
 
+  //? Parametros de ruta
   const { id, name, age } = params;
 
   return (
