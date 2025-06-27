@@ -9,6 +9,8 @@ import placeholder from '~/assets/images/placeholder.svg';
 import type { Route } from "./+types/loginPage";
 
 import { commitSession, getSession } from "~/session.server";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -40,11 +42,18 @@ export async function action({ request, }: Route.ActionArgs) {
 
   if (email !== 'algo@gmail.com') {
     session.flash('error', "Invalid Email")
-    return redirect('/auth/login', {
-      headers: {
-        "Set-Cookie": await commitSession(session),
+    return data(
+      {
+        error: 'Invalid email',
+      },
+      {
+        headers: {
+          'Set-Cookie': await commitSession(session),
+        },
+        status: 400,
+        statusText: 'Bad request'
       }
-    })
+    )
   }
 
   session.set("userId", 'U1-12345');
@@ -60,12 +69,20 @@ export async function action({ request, }: Route.ActionArgs) {
 
 
 
-const loginPage = () => {
+const loginPage = ({ actionData }: Route.ComponentProps) => {
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (actionData?.error) {
+      toast(actionData.error, { position: 'top-center', duration: 1500 });
+    }
+  }, [actionData]);
+
 
   const onAppleSingIn = () => {
     navigate('/auth/testing')
-  }
+  };
 
 
   return (
