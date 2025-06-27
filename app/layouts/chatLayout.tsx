@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Form, Outlet, redirect } from "react-router";
 import { LogOut, X } from "lucide-react";
 import type { Route } from "./+types/chatLayout";
 
@@ -7,12 +7,22 @@ import { ContactList } from "~/chat/components/ContactList";
 import { ContactInformationCard } from '../chat/components/contactInformationCard/ContactInformationCard';
 
 import { getClients } from "~/fake/fake-data";
+import { getSession } from "~/session.server";
+
 
 //? Este componente solo funciona en los route modules que estén definidos en mis rutas
-export async function loader() {
+export async function loader({ request }: Route.LoaderArgs ) {
+
+    const session = await getSession( request.headers.get('Cookie') );
+
+    if( !session.has('userId') ) {
+        return redirect('/auth/login');
+    }
+
     const clients = await getClients();
     return { clients };
 }
+
 
 export default function Layout( { loaderData }: Route.ComponentProps ) {
 
@@ -33,10 +43,12 @@ export default function Layout( { loaderData }: Route.ComponentProps ) {
                 <ContactList clients={ clients }/>
 
                 <div className="p-4 border-t">
-                    <Button variant="destructive" className="w-full">
-                        <LogOut/>
-                        Logout
-                    </Button>
+                    <Form action="/auth/logout" method="post">
+                        <Button variant="destructive" className="w-full">
+                            <LogOut/>
+                            Logout
+                        </Button>
+                    </Form>
                 </div>
             </div>
 

@@ -11,6 +11,9 @@ export default [
             route('register', 'routes/auth/registerPage.tsx'),
             route('testing', 'routes/auth/testingPage.tsx'),
             route('testingargs/:id/:name/:age', 'routes/auth/testingArgsPage.tsx'),
+
+            // Actions
+            route('logout', 'auth/actions/logout.action.ts'),
         ])
     ]),
 
