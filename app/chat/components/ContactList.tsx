@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router';
+import { NavLink, useParams } from 'react-router';
 
 import { Button } from '~/components/ui/button';
 import { ScrollArea } from '~/components/ui/scroll-area';
@@ -10,7 +10,7 @@ interface Props {
 
 export const ContactList = ({ clients }: Props) => {
 
-
+    const { id } = useParams();
 
     return (
         <ScrollArea className="h-[calc(100vh-130px)]">
@@ -23,18 +23,22 @@ export const ContactList = ({ clients }: Props) => {
                             clients.map(client => (
                                 <NavLink
                                     key={client.id}
-                                    to={`/chat/client/${ client.id }`}
-                                    className={({ isActive }) =>
+                                    to={`/chat/client/${client.id}`}
+                                    className={({ isActive, isPending }) =>
                                         `w-full flex items-center mt-1 transition-all duration-300 rounded-lg px-2 py-2 ${isActive
                                             ? 'bg-primary/10 border-primary shadow-md'
-                                            : 'hover:bg-gray-100'
+                                            : isPending
+                                                ? 'bg-primary/10 border-primary shadow-md'
+                                                : ''
                                         }`
                                     }
                                 >
                                     <div className="h-6 w-6 rounded-full bg-blue-400 mr-2 flex-shrink-0 flex items-center justify-center text-white text-xs">
-                                        {client.name.charAt(0)}
+                                        {client.name.charAt(0) + client.name.charAt(1)}
                                     </div>
-                                    {client.name}
+                                    <span className={ id === client.id ? 'font-bold' : '' }>
+                                        {client.name}
+                                    </span>
                                 </NavLink>
                             ))
                         }
