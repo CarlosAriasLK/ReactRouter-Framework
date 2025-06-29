@@ -70,15 +70,11 @@ export function HydrateFallback() {
 
 clientLoader.hydrate = true as const;
 
-export default function testingArgsPage({
-  loaderData,
-  actionData,
-  params,
-  matches,
-}: Route.ComponentProps) {
+export default function testingArgsPage({ loaderData, actionData, params, matches, }: Route.ComponentProps) {
 
   //? Parametros de ruta
   const { id, name, age } = params;
+  console.log(id, name, age);
 
   return (
     <div>

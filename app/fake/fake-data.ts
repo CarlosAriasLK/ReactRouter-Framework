@@ -84,9 +84,7 @@ const fakeMessages = {
     },
 };
 
-export const getClientMessages = async (
-    clientId: string
-): Promise<Message[]> => {
+export const getClientMessages = async ( clientId: string ): Promise<Message[]> => {
     await sleep(300);
     return fakeMessages.getMessages(clientId);
 };

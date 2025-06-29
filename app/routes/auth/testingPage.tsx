@@ -33,12 +33,7 @@ export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
 
 
 
-export default function testingPage({
-  loaderData,
-  actionData,
-  params,
-  matches,
-}: Route.ComponentProps) {
+export default function testingPage({ loaderData, actionData, params, matches,}: Route.ComponentProps) {
 
   const navigation = useNavigation();
   const isPosting = navigation.state === 'submitting';
