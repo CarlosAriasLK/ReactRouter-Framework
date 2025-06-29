@@ -9,7 +9,7 @@ import type { Client } from "~/chat/interfaces/chat.interfaces";
 export const ContactInformationCard = () => {
 
     const { id } = useParams();
-    const { clients = [] } = useLoaderData();
+    const { clients = [] } = useLoaderData(); // Toma el loader mas cercano
 
     const { state } = useNavigation();
 

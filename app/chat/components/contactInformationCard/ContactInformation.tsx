@@ -1,5 +1,6 @@
 import type { Client } from "~/chat/interfaces/chat.interfaces"
 import { Button } from "~/components/ui/button"
+import { formateDate } from "~/lib/date-formater";
 
 interface Props {
     client: Client;
@@ -48,7 +49,7 @@ export const ContactInformation = ({ client }: Props) => {
                         </div>
                         <div className="flex justify-between text-sm">
                             <span className="text-muted-foreground">Member since:</span>
-                            <span>{client.memberSince.toLocaleDateString()}</span>
+                            <span>{formateDate(client.memberSince)}</span>
                         </div>
                         <div className="flex justify-between text-sm">
                             <span className="text-muted-foreground">Last bill:</span>
