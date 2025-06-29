@@ -11,6 +11,7 @@ import type { Route } from "./+types/loginPage";
 import { commitSession, getSession } from "~/session.server";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { loginUser } from "~/fake/fake-data";
 
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -28,7 +29,6 @@ export async function loader({ request }: Route.LoaderArgs) {
       },
     }
   );
-
 }
 
 
@@ -44,7 +44,7 @@ export async function action({ request, }: Route.ActionArgs) {
     session.flash('error', "Invalid Email")
     return data(
       {
-        error: 'Invalid email',
+        error: 'Invalid email!!',
       },
       {
         headers: {
@@ -56,8 +56,11 @@ export async function action({ request, }: Route.ActionArgs) {
     )
   }
 
-  session.set("userId", 'U1-12345');
-  session.set('token', 'token-1234567890');
+  const user = await loginUser();
+
+  session.set("userId", user.id);
+  session.set('token', user.token);
+  session.set('name', user.name);
 
   return redirect("/chat", {
     headers: {
