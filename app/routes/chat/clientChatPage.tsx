@@ -5,10 +5,16 @@ import { Button } from "~/components/ui/button";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Textarea } from "~/components/ui/textarea";
 import { getClientMessages, sendMessage } from "~/fake/fake-data";
-import type { Route } from "./+types/clientChatPage";
 import { formateDate } from "~/lib/date-formater";
 import { Form } from "react-router";
+import type { Route } from "./+types/clientChatPage";
+import type { ShouldRevalidateFunctionArgs } from "react-router";
 
+
+//* Esta funcion viene por defecto en true
+export function shouldRevalidate( arg: ShouldRevalidateFunctionArgs ) {
+  return true;
+}
 
 export async function loader({ params }: Route.LoaderArgs) {
   const { id } = params;
@@ -19,19 +25,19 @@ export async function loader({ params }: Route.LoaderArgs) {
 export async function action({ request, params }: Route.ActionArgs) {
   const formaData = await request.formData();
   const message = `${formaData.get('message')}`;
-  
+
   const newMessage = await sendMessage({
     sender: 'agent',
     clientId: params.id,
     content: message,
     createdAt: new Date(),
   })
+
 }
 
 
 const clientChatPage = ({ loaderData }: Route.ComponentProps) => {
   const [input, setInput] = useState("");
-
   const { messages = [] } = loaderData;
 
 
@@ -42,10 +48,10 @@ const clientChatPage = ({ loaderData }: Route.ComponentProps) => {
 
           {
             messages.length === 0 && (
-                <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center justify-center">
                 <MessagesSquare className="w-13 h-13 text-gray-400 mb-2" />
                 <p className="font-semibold">No messages yet</p>
-                </div>
+              </div>
             )
           }
 

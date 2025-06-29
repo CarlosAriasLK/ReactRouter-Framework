@@ -6,12 +6,12 @@ import { Button } from "~/components/ui/button";
 import { ContactList } from "~/chat/components/ContactList";
 import { ContactInformationCard } from '../chat/components/contactInformationCard/ContactInformationCard';
 
-import { getClients } from "~/fake/fake-data";
+import { getClient, getClients } from "~/fake/fake-data";
 import { getSession } from "~/session.server";
 
 
 //? Este componente solo funciona en los route modules que estén definidos en mis rutas
-export async function loader({ request }: Route.LoaderArgs ) {
+export async function loader({ request, params }: Route.LoaderArgs ) {
 
     const session = await getSession( request.headers.get('Cookie') );
 
@@ -21,8 +21,13 @@ export async function loader({ request }: Route.LoaderArgs ) {
     if( !session.has('userId') ) {
         return redirect('/auth/login');
     }
-
     const clients = await getClients();
+
+    if ( params.id ) {
+        const client = await getClient( params.id );
+        return { client, clients }
+    }
+
     return { clients, userName };
 }
 
