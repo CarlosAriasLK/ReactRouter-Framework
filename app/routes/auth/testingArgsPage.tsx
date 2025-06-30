@@ -79,7 +79,11 @@ export default function testingArgsPage({ loaderData, actionData, params, matche
   return (
     <div>
 
-      <h1 className="text-2xl font-bold text-blue-500 py-5">Texting args page</h1>
+      <h1 className="text-2xl font-bold">name: { name }</h1>
+      <h1 className="text-2xl font-bold">Age { age }</h1>
+      <h1 className="text-2xl font-bold mb-3">id { id }</h1>
+
+
       <p>Loader Data: {JSON.stringify(loaderData)}</p>
       <p>Action Data: {JSON.stringify(actionData)}</p>
       <p>Route Parameters: {JSON.stringify(params)}</p>
