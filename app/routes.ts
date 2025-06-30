@@ -25,6 +25,9 @@ export default [
             route('client/:id', 'routes/chat/clientChatPage.tsx'),
         ])
     ]),
+
+    // Productos
+    route('/productos/:name', 'routes/product.tsx'),
     
 
 ] satisfies RouteConfig;
